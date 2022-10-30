@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:money_manager/Widget/custom_app.dart';
+import 'package:money_manager/Widget/custom_background.dart';
+import 'package:money_manager/Widget/custom_colors.dart';
+import 'package:money_manager/screens/home.dart';
 
 class LoginSecreen extends StatefulWidget {
   LoginSecreen({Key? key , required this.title }) : super (key: key);
@@ -12,11 +16,8 @@ class LoginSecreen extends StatefulWidget {
 class _LoginSecreenState extends State<LoginSecreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.blueGrey,
-
-      body:
-      AnnotatedRegion<SystemUiOverlayStyle>(
+    return CustomBackground(
+      child:  AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
           child: Stack(
@@ -26,7 +27,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
               Container(
 
 
-            margin: EdgeInsets.only(top: 150),
+                margin: EdgeInsets.only(top: 150),
                 height: double.infinity,
                 width: double.infinity,
                 child: Padding(
@@ -36,18 +37,18 @@ class _LoginSecreenState extends State<LoginSecreen> {
                   child: Column(
 
                     children: [
-                      Icon(Icons.monetization_on_outlined ,color: Colors.amber[200],size: 50, ),
+                      Icon(Icons.monetization_on_outlined ,color:CustomColors.colorYellow,size: 50, ),
                       Text("Money Hunter", style: TextStyle(
 
-                          color: Colors.amber[200],
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                        color: CustomColors.colorYellow,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
 
                         letterSpacing: 1,
                       ),),
                       Text("Enter your Income for the first time",
                         style: TextStyle(
-                          color: Colors.white,
+                          color:CustomColors.colorWhite,
                           fontSize: 15,
                         ),),
 
@@ -60,7 +61,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
 
 //
 
-                     /* new Row(
+                      /* new Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           new Flexible(
@@ -91,7 +92,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
                         ],
                       ),*/
 
-                    //
+                      //
 
 
 
@@ -99,13 +100,13 @@ class _LoginSecreenState extends State<LoginSecreen> {
 
                         decoration: InputDecoration(
 
-                            hintText: "Name a purpose (optional)",
-                            hintStyle:TextStyle(fontSize: 13.0, color: Colors.grey , height: 2),
-                            suffixIcon: Icon(Icons.check ,color: Colors.amber[200],size: 20, ),
+                          hintText: "Name a purpose (optional)",
+                          hintStyle:TextStyle(fontSize: 13.0, color: CustomColors.colorGrey , height: 2),
+                          suffixIcon: Icon(Icons.check ,color: CustomColors.colorYellow,size: 20, ),
 
-                      ),
+                        ),
 
-                           style: TextStyle(fontSize:14 ),
+                        style: TextStyle(fontSize:14 ),
 
 
                       ),
@@ -116,7 +117,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
                           label: Container(),
                           style: TextButton.styleFrom(padding: EdgeInsets.all(20),
                           ),
-                          icon: Icon(Icons.add_box_outlined, color:Colors.amber[200],
+                          icon: Icon(Icons.add_box_outlined, color:CustomColors.colorYellow,
                             size: 26.0,
                           ),
 
@@ -131,10 +132,13 @@ class _LoginSecreenState extends State<LoginSecreen> {
 
                       TextButton.icon(
 
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CustomApp()));
+
+                        },
                         icon: Icon( // <-- Icon
                           Icons.arrow_forward,
-                          color: Colors.amber[200],
+                          color: CustomColors.colorYellow,
                           size: 26.0,
 
 
@@ -152,9 +156,8 @@ class _LoginSecreenState extends State<LoginSecreen> {
           ),
         ),
       ),
-
-
     );
+
   }
 
 
@@ -168,7 +171,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
       children: [
 
 
-        Text("Name :" , style: TextStyle(color: Colors.amber[200] , fontSize: 15 , height: 7),
+        Text("Name :" , style: TextStyle(color: CustomColors.colorYellow , fontSize: 15 , height: 7),
         ),
         SizedBox( height: 3),
 
@@ -180,7 +183,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
             decoration: InputDecoration(
 
               hintText: "Type your name ..." ,
-              hintStyle:TextStyle(fontSize: 13.0, color: Colors.grey),
+              hintStyle:TextStyle(fontSize: 13.0, color: CustomColors.colorGrey),
 
             ),
             keyboardType: TextInputType.name,
@@ -202,7 +205,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
 
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Monthly balance :" , style: TextStyle(color: Colors.amber[200] , fontSize: 15 ,height: 2),
+        Text("Monthly balance :" , style: TextStyle(color: CustomColors.colorYellow , fontSize: 15 ,height: 2),
         ),
         SizedBox( height: 3),
 
@@ -214,9 +217,9 @@ class _LoginSecreenState extends State<LoginSecreen> {
             decoration: InputDecoration(
 
               hintText: "00,00" ,
-              hintStyle:TextStyle(fontSize: 13.0, color: Colors.grey),
+              hintStyle:TextStyle(fontSize: 13.0, color:CustomColors.colorGrey),
 
-              suffixIcon: Icon(Icons.attach_money ,color: Colors.amber[200],size: 17, ),
+              suffixIcon: Icon(Icons.attach_money ,color:  CustomColors.colorYellow,size: 17, ),
 
             ),
 
@@ -233,7 +236,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
 
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Saving balance :" , style: TextStyle(color: Colors.amber[200] , fontSize: 15 , height: 2),
+        Text("Saving balance :" , style: TextStyle(color: CustomColors.colorYellow , fontSize: 15 , height: 2),
         ),
         SizedBox( height: 3),
 
@@ -245,9 +248,9 @@ class _LoginSecreenState extends State<LoginSecreen> {
             decoration: InputDecoration(
 
                 hintText: "00,00",
-              hintStyle:TextStyle(fontSize: 13.0, color: Colors.grey),
+              hintStyle:TextStyle(fontSize: 13.0, color: CustomColors.colorGrey),
 
-              suffixIcon: Icon(Icons.attach_money ,color: Colors.amber[200],size: 17, ),
+              suffixIcon: Icon(Icons.attach_money ,color: CustomColors.colorYellow,size: 17, ),
 
 
             ),
@@ -267,7 +270,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
 
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Basics outcome :" , style: TextStyle(color: Colors.amber[200] , fontSize: 15 , height: 2),
+        Text("Basics outcome :" , style: TextStyle(color: CustomColors.colorYellow, fontSize: 15 , height: 2),
         ),
         SizedBox( height: 3),
 
@@ -277,9 +280,9 @@ class _LoginSecreenState extends State<LoginSecreen> {
           child: TextField(
             decoration: InputDecoration(
                 hintText: "00,00",
-              hintStyle:TextStyle(fontSize: 13.0, color: Colors.grey),
+              hintStyle:TextStyle(fontSize: 13.0, color: CustomColors.colorGrey),
 
-              suffixIcon: Icon(Icons.attach_money ,color: Colors.amber[200],size: 17, ),
+              suffixIcon: Icon(Icons.attach_money ,color: CustomColors.colorYellow,size: 17, ),
 
             ),
             keyboardType: TextInputType.number,

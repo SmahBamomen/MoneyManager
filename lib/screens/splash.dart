@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'login.dart';
+import 'package:money_manager/Widget/custom_background.dart';
+import 'package:money_manager/Widget/custom_colors.dart';
+import 'package:money_manager/screens/homepage.dart';
+import 'package:get/get.dart';
 
 
 class Splash extends StatefulWidget {
@@ -15,66 +17,70 @@ class _SplashState extends State<Splash> {
 
 void initState(){
      super.initState();
-     _navigatetohome();
-  }
-  _navigatetohome() async{
-    await Future.delayed(Duration(milliseconds: 1000 ), (){});
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginSecreen(title:'bbbb',)));
   }
+  // _navigatetohome() async{
+  //   await Future.delayed(Duration(milliseconds: 1000 ), (){});
+  //   // Get.back();
+  //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginSecreen(title:'bbbb',)));
+  // }
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blueGrey,
+    return CustomBackground(
+      child: Center(
+        child: Container(
 
-body: Center(
-child: Container(
-  margin: EdgeInsets.only(top: 300),
+          margin: EdgeInsets.only(top: 300),
 
-  child: Column(
-          children: [
-            Icon(Icons.monetization_on_outlined ,color: Colors.amber[200],size: 50, ),
-            Text("Money Hunter", style: TextStyle(
+          child: Column(
+            children: [
+              Icon(Icons.monetization_on_outlined , color: CustomColors.colorYellow,size: 50, ),
+              Text("Money Hunter", style: TextStyle(
 
-              color: Colors.amber[200],
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+                color: CustomColors.colorYellow,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
 
-              letterSpacing: 1,
-            ),),
-          Text("Start your wealth journey" , style: TextStyle(fontSize: 15 ,                          color: Colors.white,
-          ),),
-            Text(  "                          "),
-            Text(  "                          "),
-            Text(  "                          "),
-            Text(  "                          "),
-            Text(  "                          "),
-            Text(  "                          "),
-
+                letterSpacing: 1,
+              ),),
+              Text("Start your wealth journey" , style: TextStyle(fontSize: 15 ,  color: CustomColors.colorWhite,
+              ),),
+              Text(  "                          "),
+              Text(  "                          "),
+              Text(  "                          "),
+              Text(  "                          "),
+              Text(  "                          "),
+              Text(  "                          "),
 
 
 
 
-            TextButton.icon(
 
-    onPressed: () {},
-  icon: Icon( // <-- Icon
-    Icons.arrow_forward,
-    color: Colors.amber[200],
-    size: 26.0,
+              TextButton.icon(
+
+                onPressed: () {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginSecreen(title:'bbbb',)));
+
+                  // Get.to(LoginSecreen(title:'bbbb',));
+                },
+                icon: Icon( // <-- Icon
+                  Icons.arrow_forward,
+                  color: CustomColors.colorYellow,
+                  size: 26.0,
 
 
-  ),
+                ),
 
-  label: Text(''),
-),
+                label: Text(''),
+              ),
 
             ],
 
 
-),),
-), );
+          ),),
+      ),
+    );
   }
 }
