@@ -5,6 +5,7 @@ import 'package:money_manager/Widget/custom_colors.dart';
 import 'package:mrx_charts/mrx_charts.dart';
 import 'package:flutter/material.dart';
 class BarChart extends StatelessWidget {
+
   const BarChart({
     Key? key,
   }) : super(key: key);
@@ -21,8 +22,8 @@ class BarChart extends StatelessWidget {
             settings: ChartAxisSettings(
               x: ChartAxisSettingsAxis(
                 frequency: 1.0,
-                max: double.parse('12.45'),
-                min: double.parse('1.45'),
+                max: 13,
+                min: 7,
                 textStyle: TextStyle(
                   color: Colors.white.withOpacity(0.6),
                   fontSize: 0.0,

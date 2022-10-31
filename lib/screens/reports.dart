@@ -18,7 +18,7 @@ class _ReportsState extends State<Reports> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
           SizedBox(height: 100),
-      CustomDisplayName(userName:"Money Hunter"),
+      CustomDisplayName(userName:"Money Hunter",route: "reports",),
        Expanded(
          child: DefaultTabController(
 

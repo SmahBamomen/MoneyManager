@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:money_manager/Widget/custom_app.dart';
 import 'package:money_manager/Widget/custom_background.dart';
 import 'package:money_manager/Widget/custom_colors.dart';
-import 'package:money_manager/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginSecreen extends StatefulWidget {
   LoginSecreen({Key? key , required this.title }) : super (key: key);
@@ -14,6 +15,10 @@ class LoginSecreen extends StatefulWidget {
 }
 
 class _LoginSecreenState extends State<LoginSecreen> {
+  TextEditingController userNameController = new TextEditingController();
+  TextEditingController monthlyBalanceController = new TextEditingController();
+  TextEditingController savingBalanceController = new TextEditingController();
+  TextEditingController basicOutcomeController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return CustomBackground(
@@ -97,7 +102,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
 
 
                       TextField(
-
+controller: userNameController,
                         decoration: InputDecoration(
 
                           hintText: "Name a purpose (optional)",
@@ -132,7 +137,14 @@ class _LoginSecreenState extends State<LoginSecreen> {
 
                       TextButton.icon(
 
-                        onPressed: () {
+                        onPressed: () async{
+                          final FirebaseAuth auth = FirebaseAuth.instance;
+
+                          FirebaseFirestore.instance
+                              .collection('users').doc(auth.currentUser?.uid)
+                              .set({'uid':auth.currentUser?.uid,'userName':userNameController.text,'monthlyBalance': double.parse(monthlyBalanceController.text),'savingBalance':double.parse(savingBalanceController.text),'bacicsOutcome':double.parse(basicOutcomeController.text) });
+
+
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CustomApp()));
 
                         },
@@ -180,6 +192,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
           alignment: Alignment.bottomLeft,
           height: 17,
           child: TextField(
+            controller: userNameController,
             decoration: InputDecoration(
 
               hintText: "Type your name ..." ,
@@ -214,6 +227,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
           alignment: Alignment.bottomLeft,
           height: 16,
           child: TextField(
+            controller: monthlyBalanceController,
             decoration: InputDecoration(
 
               hintText: "00,00" ,
@@ -245,6 +259,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
           alignment: Alignment.bottomLeft,
           height: 16,
           child: TextField(
+            controller: savingBalanceController,
             decoration: InputDecoration(
 
                 hintText: "00,00",
@@ -278,6 +293,7 @@ class _LoginSecreenState extends State<LoginSecreen> {
           alignment: Alignment.bottomLeft,
           height: 16,
           child: TextField(
+            controller: basicOutcomeController,
             decoration: InputDecoration(
                 hintText: "00,00",
               hintStyle:TextStyle(fontSize: 13.0, color: CustomColors.colorGrey),

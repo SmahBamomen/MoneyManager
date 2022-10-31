@@ -10,6 +10,7 @@ class CustomButton extends StatefulWidget {
       textColor,
       padding,
       elevation;
+
   const CustomButton(
       {Key? key,
         required this.text,

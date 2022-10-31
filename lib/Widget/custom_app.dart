@@ -21,9 +21,9 @@ class CustomApp extends StatefulWidget {
 class _CustomAppState extends State<CustomApp> {
   int _selectedIndex = 0;
   Color changeColor =  CustomColors.colorGrey;
-  final ScrollController _homeController = ScrollController();
+
   static const List<Widget> _pages = <Widget>[
-    Reports(),
+    Home(),
     Home(),
     Goals(),
   ];

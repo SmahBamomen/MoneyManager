@@ -55,7 +55,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       width: 363,
       height: 41,
       child: TextField(
-        // controller: controller,
+        controller: controller,
         style: const TextStyle(fontSize: 12),
         keyboardType: keyboardType ?? TextInputType.text,
         inputFormatters: inputFormatters ?? [],

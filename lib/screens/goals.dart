@@ -25,7 +25,7 @@ class _GoalsState extends State<Goals> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(height: 100),
-        CustomDisplayName(userName:"Money Hunter"),
+        CustomDisplayName(userName:"Money Hunter",route: "goals",),
 SizedBox(height: 50),
         Text("My Goals",style: TextStyle(fontWeight: FontWeight.w600,fontSize:16 ,color: CustomColors.colorWhite,),),
         SizedBox(height: 10),

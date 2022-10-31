@@ -14,6 +14,7 @@ class CustomColors{
   static  const Color colorTextGrey = Color(0xFF9CACB9);
   static  const Color colorAlertGrey = Color(0xFF4D627480);
   static  const Color colorHintGrey = Color(0xFFB9B9B9);
+  static  const Color colorRed = Color(0xFFF23B3B);
 
 
 }
