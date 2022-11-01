@@ -1,71 +1,177 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:money_manager/Widget/custom_background.dart';
+import 'package:money_manager/Widget/custom_colors.dart';
+import 'package:money_manager/Widget/custom_display_name.dart';
+import 'chart.dart';
 
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  static const String _title = 'Flutter Code Sample';
+class Reports extends StatefulWidget {
+  const Reports({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: MyStatelessWidget(),
-    );
-  }
+  State<Reports> createState() => _ReportsState();
 }
 
-class MyStatelessWidget extends StatelessWidget {
-  const MyStatelessWidget({super.key});
-
+class _ReportsState extends State<Reports> {
   @override
+
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return CustomBackground(
+
+      child: Column(
+
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
 
 
-      initialIndex: 1,
-      length: 3,
+            SizedBox(height: 33),
+            CustomDisplayName(userName:"المدير المالي"),
+            SizedBox(height: 50),
 
 
-      child: Scaffold(
-        backgroundColor: Colors.blueGrey,
-            appBar: AppBar(
-              title:  Text("Money Hunter", style: TextStyle(
-
-                color: Colors.amber,
-                fontSize: 20,
-                fontWeight: FontWeight.normal,
+//
 
 
-                letterSpacing: 1,
-              )),
+//  Container(
+//      child:  DefaultTabController(
+//             initialIndex: 1,
+//              length: 3,
+//
+//
+//   child: TabBar(
+//
+//     tabs: [
+//       Tab(text: "شهري"),
+//       Tab(text: "اسبوعي"),
+//       Tab(text: "يومي"),
+//     ],
+//   ),
+//      )
+// ),
+
+        //     Container(
+        //
+        //           width: double.maxFinite,
+        //        height: 300,
+        // child: TabBarView(
+        //
+        //   children: [
+        //     Text("data"),
+        //           Text("data"),
+        //           Text("data"),
+        //
+        //
+        //           ],
+        // ),
+        //             ),
+        //     )
+       Expanded(
+         child:  DefaultTabController(
+         // initialIndex: 1,
+           length: 3,
+
+           child:new
+           Scaffold(
+             appBar: AppBar(
               bottom: TabBar(
+
+                unselectedLabelColor: Colors.white,
+                labelColor: Colors.white60,
+                isScrollable: false,
                 tabs: [
-                  Tab(text: "Daily"),
-                  Tab(text: "Weekly"),
-                  Tab(text: "Monthly"),
+                  Tab(text: "شهري"),
+                  Tab(text: "اسبوعي"),
+                  Tab(text: "يومي"),
                 ],
+
+                indicatorColor: Colors.amber,
               ),
-            ),
+                 flexibleSpace: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: CustomColors.colorGradient
+                  )
+               ),
+                ),
+              ),
+               body:
+            Container(
+                 decoration:  BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: CustomColors.colorGradient)),
+                 child: Stack(
+                  children: [
+                    const TabBarView(
+                      children: <Widget>[
+                        BarChart(),
+                        BarChart(),
+                        BarChart(),
 
-
-
-        body: const TabBarView(
-          children: <Widget>[
-            Center(
-              child: Text("It's Daily here"),
-            ),
-            Center(
-              child: Text("It's Weekly here"),
-            ),
-            Center(
-              child: Text("It's Monthly here"),
-            ),
-          ],
-        ),
+              ],
+             ),
+                  ],
+                 ),)
+          ),
       ),
+       ),
+
+
+
+
+            buildList(),
+            Column(
+
+
+              children: const [
+
+
+                ListTile(
+                  leading:Icon(Icons.arrow_downward,color: Colors.red,),
+                  title: Text('قهوة',  textAlign: TextAlign.right,style: TextStyle(color: Colors.white ,fontSize: 12)),
+                  trailing: Icon(Icons.coffee_rounded,color: CustomColors.colorYellow),
+                ),
+                ListTile(
+                  leading: Icon(Icons.arrow_upward_sharp,color: Colors.green,),
+                  title: Text('دخل إضافي',textAlign: TextAlign.right,style: TextStyle(color: Colors.white,fontSize: 12)),
+                  trailing: Icon(Icons.monetization_on_outlined ,color: CustomColors.colorYellow),
+                ),
+                ListTile(
+                  leading: Icon(Icons.arrow_downward,color: Colors.red,),
+                  title: Text('وقود',textAlign: TextAlign.right,style: TextStyle(color: Colors.white,fontSize: 12)),
+                  trailing:Icon(Icons.ad_units,color: CustomColors.colorYellow),
+
+
+
+
+
+                )
+              ],
+            ),
+    ]
+
+    ),
+
+    );
+
+  }
+
+
+  Widget buildList(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.end,
+
+      children: [
+            Text("آخر العمليات",style: TextStyle(fontSize:16 ,color: CustomColors.colorWhite,),),
+
+        Divider(
+          color: CustomColors.colorWhite,
+        ),
+      ],
     );
   }
 }
