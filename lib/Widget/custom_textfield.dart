@@ -14,14 +14,14 @@ class CustomTextFeild extends StatefulWidget {
 
   const CustomTextFeild(
       {Key? key,
-        required this.hinttext,
-        this.controller,
-        this.widthBorder,
-        this.radiusBorder,
-        this.keyboardType,
-        this.action,
-        this.suffix,
-        this.inputFormatters})
+      required this.hinttext,
+      this.controller,
+      this.widthBorder,
+      this.radiusBorder,
+      this.keyboardType,
+      this.action,
+      this.suffix,
+      this.inputFormatters})
       : super(key: key);
 
   @override
@@ -91,8 +91,7 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
 OutlineInputBorder inputBorder({widthBorder, color, double? borderRadius}) {
   return OutlineInputBorder(
     borderSide: BorderSide(
-        width: widthBorder ?? 1.0,
-        color: color ?? CustomColors.colorWhite),
+        width: widthBorder ?? 1.0, color: color ?? CustomColors.colorWhite),
     borderRadius: BorderRadius.circular(borderRadius ?? 4),
   );
 }
