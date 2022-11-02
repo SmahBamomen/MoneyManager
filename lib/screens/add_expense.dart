@@ -5,6 +5,8 @@ import 'package:money_manager/Widget/custom_textfield.dart';
 import 'package:flutter/services.dart';
 import 'package:money_manager/model/function.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'drobDown.dart';
+
 class AddExpense extends StatefulWidget {
   const AddExpense({Key? key}) : super(key: key);
 
@@ -18,10 +20,8 @@ class _AddExpenseState extends State<AddExpense> {
   TextEditingController purposeController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return StatefulBuilder(
-        builder: (BuildContext context, setState) {
+    return StatefulBuilder(builder: (BuildContext context, setState) {
       return AlertDialog(
-
         backgroundColor: CustomColors.colorAlertGrey.withOpacity(0.5),
         scrollable: true,
         shape: RoundedRectangleBorder(
@@ -32,8 +32,6 @@ class _AddExpenseState extends State<AddExpense> {
           height: 243,
           child: Column(
             children: <Widget>[
-
-
               CustomTextFeild(
                 // widthBorder: 0.0,
                 controller: moneyController,
@@ -42,25 +40,20 @@ class _AddExpenseState extends State<AddExpense> {
                 suffix: Icon(Icons.attach_money),
                 keyboardType: TextInputType.phone,
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(
-                      RegExp(r'[0-9]')),
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                   LengthLimitingTextInputFormatter(10)
                 ],
               ),
               const SizedBox(
-                height: 8,
+                height: 6,
               ),
-              CustomTextFeild(
-                controller: categoriesController,
-                hinttext: 'categories',
-                keyboardType: TextInputType.number,
-              ),
+              const Dropdown(),
               const SizedBox(
                 height: 6,
               ),
               CustomTextFeild(
                 controller: purposeController,
-                hinttext: 'Name a purpose (optional)',
+                hinttext: 'ادخل غرضاً(اختياري)',
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(
@@ -68,29 +61,35 @@ class _AddExpenseState extends State<AddExpense> {
               ),
               Row(children: [
                 CustomButton(
-                  text: 'Income',
+                  text: 'انفاق',
                   width: MediaQuery.of(context).size.width / 3.25,
                   // color: Colors.white,
                   color: Colors.transparent,
                   textColor: CustomColors.colorYellow,
                   action: () {
                     setState(() {
-
-
-                      incomeAndOutcomeFunction( double.parse(moneyController.value.text), categoriesController.text, purposeController.text,true);
-Navigator.pop(context);
+                      incomeAndOutcomeFunction(
+                          double.parse(moneyController.value.text),
+                          categoriesController.text,
+                          purposeController.text,
+                          true);
+                      Navigator.pop(context);
                     });
                   },
                 ),
                 CustomButton(
                   width: MediaQuery.of(context).size.width / 3.25,
-                  text: 'Expose',
+                  text: 'إضافة دخل',
                   // color: Colors.white,
                   color: Colors.transparent,
                   textColor: CustomColors.colorYellow,
                   action: () {
-                    setState((){
-                      incomeAndOutcomeFunction( double.parse(moneyController.value.text), categoriesController.text, purposeController.text,false);
+                    setState(() {
+                      incomeAndOutcomeFunction(
+                          double.parse(moneyController.value.text),
+                          categoriesController.text,
+                          purposeController.text,
+                          false);
                       Navigator.pop(context);
                     });
                   },
@@ -99,47 +98,61 @@ Navigator.pop(context);
             ],
           ),
         ),
-      );});
+      );
+    });
   }
-  void incomeAndOutcomeFunction(double money , String categories ,String purpose ,bool income) async{
+
+  void incomeAndOutcomeFunction(
+      double money, String categories, String purpose, bool income) async {
     double salary = 0;
-    double incomeCount =0 ;
+    double incomeCount = 0;
     FirebaseFirestore fprofits = FirebaseFirestore.instance;
 
-    final collection = await fprofits.collection('users').doc(auth.currentUser?.uid).get();
+    final collection =
+        await fprofits.collection('users').doc(auth.currentUser?.uid).get();
     final data = collection.data();
     print(data!['monthlyBalance']);
     salary = data!['monthlyBalance'];
     double bacicsOutcome = data!['bacicsOutcome'];
-    if (income == true){
+    if (income == true) {
       incomeCount = salary + money;
-      addToDB(incomeCount,bacicsOutcome);
+      addToDB(incomeCount, bacicsOutcome);
       FirebaseFirestore.instance
-          .collection('users').doc(auth.currentUser?.uid).collection("manager")
-          .add({'money':money , 'categories':categories , 'purpose':purpose ,'income':true,'outcome':false});
-
-    }
-  else {
+          .collection('users')
+          .doc(auth.currentUser?.uid)
+          .collection("manager")
+          .add({
+        'money': money,
+        'categories': categories,
+        'purpose': purpose,
+        'income': true,
+        'outcome': false
+      });
+    } else {
       incomeCount = salary - money;
       bacicsOutcome = bacicsOutcome + money;
-      addToDB(incomeCount,bacicsOutcome);
+      addToDB(incomeCount, bacicsOutcome);
       FirebaseFirestore.instance
-          .collection('users').doc(auth.currentUser?.uid).collection("manager")
-          .add({'money':money , 'categories':categories , 'purpose':purpose ,'income':false,'outcome':true});
-
+          .collection('users')
+          .doc(auth.currentUser?.uid)
+          .collection("manager")
+          .add({
+        'money': money,
+        'categories': categories,
+        'purpose': purpose,
+        'income': false,
+        'outcome': true
+      });
     }
-
-
-
   }
 
-  void addToDB(double monthlyBalance,double bacicsOutcome){
+  void addToDB(double monthlyBalance, double bacicsOutcome) {
     FirebaseFirestore.instance
-        .collection('users').doc(auth.currentUser?.uid)
-        .update({'monthlyBalance':monthlyBalance,'bacicsOutcome':bacicsOutcome});
+        .collection('users')
+        .doc(auth.currentUser?.uid)
+        .update(
+            {'monthlyBalance': monthlyBalance, 'bacicsOutcome': bacicsOutcome});
   }
-  void exposeFunction(){
 
-  }
-
+  void exposeFunction() {}
 }
