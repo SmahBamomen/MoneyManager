@@ -30,7 +30,6 @@ class _DropdownState extends State<Dropdown> {
       decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
           color: CustomColors.colorTextGrey.withOpacity(0.55),
-          // borderRadius: BorderRadius.all(),
           borderRadius: BorderRadius.all(Radius.circular(3.75))),
       width: 363,
       height: 41,
@@ -38,6 +37,7 @@ class _DropdownState extends State<Dropdown> {
         isExpanded: true,
         value: dropdownValue,
         borderRadius: BorderRadius.all(Radius.circular(3.75)),
+
         dropdownColor: CustomColors.colorTextGrey.withOpacity(0.55),
 
         //لون القائمه حقت الدروب داون
@@ -46,7 +46,7 @@ class _DropdownState extends State<Dropdown> {
           color: Colors.white,
         ),
         elevation: 16,
-        style: const TextStyle(color: CustomColors.colorHintGrey),
+        style: const TextStyle(color: CustomColors.colorWhite),
         //لون خط الدروب داون
         onChanged: (String? value) {
           // This is called when the user selects an item.
@@ -58,7 +58,11 @@ class _DropdownState extends State<Dropdown> {
           return DropdownMenuItem<String>(
             alignment: AlignmentDirectional.center,
             value: value,
-            child: Text(value),
+            child: Column(
+              children: [
+                Text(value),
+              ],
+            ),
           );
         }).toList(),
       ),

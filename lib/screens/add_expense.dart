@@ -78,8 +78,9 @@ class _AddExpenseState extends State<AddExpense> {
                   },
                 ),
                 CustomButton(
-                  width: MediaQuery.of(context).size.width / 3.25,
+                  width: MediaQuery.of(context).size.width / 2.75,
                   text: 'إضافة دخل',
+
                   // color: Colors.white,
                   color: Colors.transparent,
                   textColor: CustomColors.colorYellow,
