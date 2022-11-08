@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/Widget/custom_background.dart';
 import 'package:money_manager/Widget/custom_colors.dart';
-import 'package:money_manager/screens/homepage.dart';
 import 'package:get/get.dart';
-
+import 'package:money_manager/screens/my_information.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -15,8 +15,8 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
 
-void initState(){
-     super.initState();
+  void initState(){
+    super.initState();
 
   }
   // _navigatetohome() async{
@@ -36,32 +36,22 @@ void initState(){
 
           child: Column(
             children: [
-              Icon(Icons.monetization_on_outlined , color: CustomColors.colorYellow,size: 50, ),
-              Text("Money Hunter", style: TextStyle(
 
-                color: CustomColors.colorYellow,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+              SvgPicture.asset("assets/icons/logo.svg",color: CustomColors.colorYellow),
 
-                letterSpacing: 1,
+            SizedBox(height: 20),
+              Text("رحلة ثراءك تبدأ من هنا" , style: TextStyle(fontWeight: FontWeight.w400,fontSize: 24 ,  color: CustomColors.colorWhite,
               ),),
-              Text("Start your wealth journey" , style: TextStyle(fontSize: 15 ,  color: CustomColors.colorWhite,
-              ),),
-              Text(  "                          "),
-              Text(  "                          "),
-              Text(  "                          "),
-              Text(  "                          "),
-              Text(  "                          "),
-              Text(  "                          "),
 
 
+              SizedBox(height: 40),
 
 
 
               TextButton.icon(
 
                 onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginSecreen(title:'bbbb',)));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyInformation()));
 
                   // Get.to(LoginSecreen(title:'bbbb',));
                 },

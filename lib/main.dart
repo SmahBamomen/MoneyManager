@@ -48,13 +48,17 @@ class _MoneyManagerMainState extends State<MoneyManagerMain> {
   TextEditingController salaryController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
+
     return GetMaterialApp(
+
+    textDirection: TextDirection.rtl,
       title: 'MoneyManagerMain',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'LamaSans',
         primarySwatch: Colors.grey,
       ),
-      home:  auth.currentUser?.uid == null ? CustomApp(): Splash(),
+      home:  auth.currentUser?.uid.isNotEmpty == true ? CustomApp() : Splash(),
       );
   }
 

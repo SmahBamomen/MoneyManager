@@ -11,6 +11,10 @@ class AlertGoals extends StatefulWidget {
 }
 
 class _AlertGoalsState extends State<AlertGoals> {
+  TextEditingController moneyController = new TextEditingController();
+  TextEditingController percentController = new TextEditingController();
+  TextEditingController purposeController = new TextEditingController();
+  String monthCount = "";
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
@@ -29,15 +33,15 @@ class _AlertGoalsState extends State<AlertGoals> {
                   height: 280,
                   child: Column(
                     children: [
-                      Text("You will reach your goal after ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: CustomColors.colorWhite),),
+                      Text("ستصل إلى هدفك في غضون ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: CustomColors.colorWhite),),
                    SizedBox(height: 10),
-                      Text("0 Months",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w500,color: CustomColors.colorWhite),),
+                      Text(monthCount,style: TextStyle(fontSize: 24,fontWeight: FontWeight.w500,color: CustomColors.colorWhite),),
                       SizedBox(height: 10),
                   Container(
                     width: 363,
                     height: 41,
                     child: TextField(
-
+controller: moneyController,
                         keyboardType: TextInputType.number,
                         style: TextStyle(
                           fontSize: 16.0,
@@ -49,9 +53,9 @@ class _AlertGoalsState extends State<AlertGoals> {
                             fillColor: CustomColors.colorTextGrey.withOpacity(0.55),
                             filled: true,
                             contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 15.0),
-                            suffixIcon: Icon(Icons.attach_money_sharp),
-                            suffixIconColor: CustomColors.colorHintGrey,
-                            hintText: "00,00",
+                            // suffixIcon: Icon(Icons.attach_money_sharp),
+                            // suffixIconColor: CustomColors.colorHintGrey,
+                            hintText: "٠٠،٠٠",
                             hintStyle: TextStyle(
                                 color: CustomColors.colorHintGrey,
                                 fontSize: 12,
@@ -81,7 +85,7 @@ class _AlertGoalsState extends State<AlertGoals> {
                         width: 363,
                         height: 41,
                         child: TextField(
-
+controller: purposeController,
                             keyboardType: TextInputType.text,
                             style: TextStyle(
                               fontSize: 16.0,
@@ -94,8 +98,8 @@ class _AlertGoalsState extends State<AlertGoals> {
                                 filled: true,
                                 contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 15.0),
                                 suffixIcon: Icon(Icons.check),
-                                suffixIconColor: CustomColors.colorHintGrey,
-                                hintText: "Your goal ",
+                                suffixIconColor: CustomColors.colorWhite.withOpacity(0.2),
+                                hintText: "هدفك...",
                                 hintStyle: TextStyle(
                                     color: CustomColors.colorHintGrey,
                                     fontSize: 12,
@@ -125,9 +129,15 @@ class _AlertGoalsState extends State<AlertGoals> {
                         width: 363,
                         height: 41,
                         child: TextField(
+                          onChanged: (value){
+                           if(value.isNotEmpty && int.parse(value) != 0){
+                             goalCalculator(8000, double.parse(moneyController.text), double.parse(percentController.text));
 
+                           }
+                          },
+controller: percentController,
                             keyboardType: TextInputType.text,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w400,
                               color: CustomColors.colorWhite,
@@ -138,33 +148,33 @@ class _AlertGoalsState extends State<AlertGoals> {
                                 filled: true,
                                 contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 15.0),
                                 suffixIcon: Icon(Icons.percent),
-                                suffixIconColor: CustomColors.colorHintGrey,
-                                hintText: "Monthly average",
-                                hintStyle: TextStyle(
+                                suffixIconColor: CustomColors.colorWhite.withOpacity(0.2),
+                                hintText: "النسبة الشهرية",
+                                hintStyle: const TextStyle(
                                   color: CustomColors.colorHintGrey,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400
                                 ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                border:  OutlineInputBorder(
+                                  borderSide: const BorderSide(
                                       width:  1.0,
                                       color:  CustomColors.colorHintGrey),
                                   borderRadius: BorderRadius.circular( 4),
                                 ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide:const BorderSide(
                                       width:  1.0,
                                       color:  CustomColors.colorHintGrey),
                                   borderRadius: BorderRadius.circular( 4),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       width:  1.0,
                                       color:  CustomColors.colorHintGrey),
                                   borderRadius: BorderRadius.circular( 4),
                                 ))),
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       // Divider(
                       //
                       //   thickness: 1,
@@ -177,13 +187,16 @@ class _AlertGoalsState extends State<AlertGoals> {
 
                             style: ButtonStyle(
 
-                                side: MaterialStateProperty.all(BorderSide(
+                                side: MaterialStateProperty.all( const BorderSide(
                                     color: CustomColors.colorHintGrey,
                                     width: 1.0,
 
                                     style: BorderStyle.solid))),onPressed:  (){
 
-                        }, child: Text("Add Goal",style: TextStyle(color: CustomColors.colorYellow),)),
+
+                          goalCalculator(8000, double.parse(moneyController.text), double.parse(percentController.text));
+
+                        }, child:const Text("أضف هدف",style: TextStyle(color: CustomColors.colorYellow),)),
                       ),
 // OutlinedButton(onPressed: null, child: Text("Add Goal",style: TextStyle(color: CustomColors.colorYellow,fontWeight: FontWeight.w600,fontSize: 14))),
                   // TextButton(onPressed: null, child: Text("Add Goal",style: TextStyle(color: CustomColors.colorYellow,fontWeight: FontWeight.w600,fontSize: 14))),
@@ -193,5 +206,32 @@ class _AlertGoalsState extends State<AlertGoals> {
                   ) ,
                 ),
               );}));;
+  }
+
+  void goalCalculator(double salary ,double amount , double present){
+
+    double calculate = salary - present ;
+    double timeToGoal = (amount / present) / 12;
+   // print("the goal is :"+ typeAcc +" and you will save every month : "+ amount.toString());
+    if (timeToGoal.remainder(12) != 0.0 ){
+      double remainder =  timeToGoal.remainder(12);
+      print(" in "+ timeToGoal.toStringAsFixed(0) +" year and " + remainder.toStringAsFixed(0) + " months");
+   setState(() {
+     monthCount = timeToGoal.toStringAsFixed(0) +" سنة و " + remainder.toStringAsFixed(0) + " أشهر ";
+
+   });
+
+    }
+
+    else{
+      //print("you reach to goal "+ accumulate.toString() +" in "+ timeToGoal.toStringAsFixed(0) +" year ");
+
+setState(() {
+  monthCount = timeToGoal.toStringAsFixed(0) +" سنة ";
+});
+      print(" in "+ timeToGoal.toStringAsFixed(0) +" year and ");
+
+    }
+
   }
 }

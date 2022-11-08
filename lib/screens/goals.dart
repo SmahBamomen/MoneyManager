@@ -10,6 +10,7 @@ import 'package:money_manager/screens/chart.dart';
 import 'package:money_manager/screens/goals.dart';
 import 'package:get/get.dart';
 import 'package:money_manager/screens/home.dart';
+import 'package:money_manager/screens/reports.dart';
 class Goals extends StatefulWidget {
   const Goals({Key? key}) : super(key: key);
 
@@ -25,9 +26,9 @@ class _GoalsState extends State<Goals> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(height: 100),
-        CustomDisplayName(userName:"Money Hunter",route: "goals",),
+        CustomDisplayName(userName:userName),
 SizedBox(height: 50),
-        Text("My Goals",style: TextStyle(fontWeight: FontWeight.w600,fontSize:16 ,color: CustomColors.colorWhite,),),
+        Text("أهدافي",style: TextStyle(fontWeight: FontWeight.w600,fontSize:16 ,color: CustomColors.colorWhite,),),
         SizedBox(height: 10),
         Expanded(
           child: ListView.builder(
@@ -73,13 +74,14 @@ SizedBox(height: 50),
               }),
         ),
         SizedBox(height: 30),
-        Container(
-          padding: EdgeInsets.only(left: 16,right: 16),
-          width: 360,
-          height: 41.0,
-          child: OutlinedButton(
+        Center(
+          child: Container(
+            padding: EdgeInsets.only(left: 16,right: 16),
+            width: 360,
+            height: 41.0,
+            child: OutlinedButton(
 
-              style: ButtonStyle(
+                style: ButtonStyle(
 
     side: MaterialStateProperty.all(BorderSide(
     color: CustomColors.colorYellow,
@@ -87,10 +89,11 @@ SizedBox(height: 50),
 
     style: BorderStyle.solid))),onPressed:  (){
 
-            showDialog(context: context, builder: (BuildContext context) {
-              return new AlertGoals();
-            });
-          }, child: Text("Add new goal",style: TextStyle(color: CustomColors.colorYellow),)),
+              showDialog(context: context, builder: (BuildContext context) {
+                return new AlertGoals();
+              });
+            }, child: Text("أضف هدف جديد",style: TextStyle(color: CustomColors.colorYellow),)),
+          ),
         ),
         SizedBox(height: 100),
       ],

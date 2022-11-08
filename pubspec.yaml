@@ -68,9 +68,21 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - assets/icons/edit.svg
-     - assets/icons/house.circle.fill.svg
+     - assets/icons/house.svg
      - assets/icons/report.svg
      - assets/icons/goal.svg
+     - assets/icons/logo.svg
+     - assets/icons/cup.svg
+     - assets/icons/dollarsign.svg
+     - assets/icons/fuelpump.svg
+     - assets/icons/phone.svg
+     - assets/icons/cash_withdrawl.svg
+     - assets/icons/electronic.svg
+     - assets/icons/extra_income.svg
+     - assets/icons/food.svg
+     - assets/icons/other.svg
+     - assets/icons/goals.svg
+     - assets/icons/file.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -83,11 +95,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  fonts:
+    - family: LamaSans
+      fonts:
+       - asset: assets/fonts/LamaSans-Medium.otf
+       - asset: assets/fonts/LamaSans-Regular.otf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
