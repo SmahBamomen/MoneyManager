@@ -29,6 +29,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 return Container();
+
 //     return StreamBuilder(
 //       stream: FirebaseFirestore.instance.collection("users").doc(auth.currentUser?.uid).snapshots(),
 //       builder: (context, snapshot) {
