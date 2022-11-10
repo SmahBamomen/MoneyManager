@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:money_manager/Widget/custom_app.dart';
 import 'package:money_manager/Widget/custom_background.dart';
@@ -11,6 +9,10 @@ import 'package:money_manager/screens/goals.dart';
 import 'package:get/get.dart';
 import 'package:money_manager/screens/home.dart';
 import 'package:money_manager/screens/reports.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+
+import '../Widget/custom.dart';
+
 class Goals extends StatefulWidget {
   const Goals({Key? key}) : super(key: key);
 
@@ -21,82 +23,160 @@ class Goals extends StatefulWidget {
 class _GoalsState extends State<Goals> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(height: 100),
-        CustomDisplayName(userName:userName),
-SizedBox(height: 50),
-        Text("أهدافي",style: TextStyle(fontWeight: FontWeight.w600,fontSize:16 ,color: CustomColors.colorWhite,),),
-        SizedBox(height: 10),
-        Expanded(
-          child: ListView.builder(
-              itemCount: 2,
-              padding:  EdgeInsets.all(0.0),
-              itemBuilder: (BuildContext context, int index) {
-                return   Container(
-                  margin: EdgeInsets.only(top: 10),
-                  width: 396,
-                  height:61 ,
-                  decoration: BoxDecoration(
-                    color: CustomColors.colorLightBlue,
-                    border: Border.all( width: 0.5 ,color:CustomColors.colorWhite ),
-                    borderRadius: BorderRadius.circular(4),
+    return SafeArea(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 70, left: 300),
+            child: CustomDisplayName(userName: userName),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "أهدافي",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  color: CustomColors.colorWhite,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return new AlertGoals();
+                      });
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "أضف هدف جديد",
+                      style: TextStyle(color: CustomColors.colorYellow),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: CustomColors.colorYellow,
+                            ),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Icon(Icons.add, color: CustomColors.colorYellow))
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Colors.white, width: 1),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Container(
+            decoration: BoxDecoration(
+                // color: Color.fromRGBO(40, 63, 84, 1),
+                color: Color.fromRGBO(77, 98, 116, 1),
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+            // color: Color.fromRGBO(77, 98, 116, 1),
+            // width: 430,
+            height: 115,
+            child: Card(
+              color: Color.fromRGBO(77, 98, 116, 1),
+              // shape: StadiumBorder(
+              //   side: BorderSide(color: Colors.black, width: 2),
+              // ),
+
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      CustomCard(
+                        text1: "  الهدف",
+                        text2: "شراء سيارة",
+                      ),
+                      CustomCard(
+                        text1: "قيمة الهدف ",
+                        text2: "١٨٠،٠٠٠",
+                      ),
+                      CustomCard(
+                        text1: "مدة الوصول",
+                        text2: "٢ اشهر",
+                      ),
+                    ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 16.0,right: 16.0),
-                    child:   Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Buy new car",style: TextStyle(fontWeight: FontWeight.w400,fontSize:14 ,color: CustomColors.colorWhite,),),
-                            Text("6 Months",style: TextStyle(fontWeight: FontWeight.w500,fontSize:12 ,color: CustomColors.colorWhite,),),
-
-                          ],),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("180,000 ",style: TextStyle(fontWeight: FontWeight.w600,fontSize:16 ,color: CustomColors.colorYellow,),),
-
-                            Text("85,000 ",style: TextStyle(fontWeight: FontWeight.w600,fontSize:16 ,color: CustomColors.colorGreen,),),
-
-                          ],),
-                      ],
+                  Padding(
+                    padding: EdgeInsets.only(right: 6, left: 6),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(40, 63, 84, 1),
+                          borderRadius: BorderRadius.all(Radius.circular(3))),
+                      // color: Color.fromRGBO(40, 63, 84, 1),
+                      width: 80,
+                      height: 100,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6),
+                            child: Text("المتبقي",
+                                style: TextStyle(
+                                  color: CustomColors.colorYellow,
+                                )),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 25, bottom: 8),
+                            child: Text("١١٥٠٠٠ ",
+                                style: TextStyle(
+                                    color: CustomColors.colorWhite,
+                                    fontSize: 30)),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                );
-              }),
-        ),
-        SizedBox(height: 30),
-        Center(
-          child: Container(
-            padding: EdgeInsets.only(left: 16,right: 16),
-            width: 360,
-            height: 41.0,
-            child: OutlinedButton(
-
-                style: ButtonStyle(
-
-    side: MaterialStateProperty.all(BorderSide(
-    color: CustomColors.colorYellow,
-    width: 1.0,
-
-    style: BorderStyle.solid))),onPressed:  (){
-
-              showDialog(context: context, builder: (BuildContext context) {
-                return new AlertGoals();
-              });
-            }, child: Text("أضف هدف جديد",style: TextStyle(color: CustomColors.colorYellow),)),
+                  Container(
+                    // width: 70,
+                    // height: 80,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 9),
+                      child: Center(
+                        child: new CircularPercentIndicator(
+                          radius: 30.0,
+                          // animation: true,
+                          // animationDuration: 1200,
+                          lineWidth: 8.0,
+                          percent: 0.6, //
+                          center: new Text(
+                            textAlign: TextAlign.center,
+                            "٢ \n اشهر",
+                            style: new TextStyle(
+                                // fontWeight: FontWeight.bold,
+                                fontSize: 9,
+                                color: CustomColors.colorWhite),
+                          ),
+                          circularStrokeCap: CircularStrokeCap.butt,
+                          backgroundColor: Color.fromRGBO(121, 133, 143, 1),
+                          progressColor: Color.fromRGBO(223, 193, 132, 1),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-        SizedBox(height: 100),
-      ],
+        ],
+      ),
     );
   }
 }
