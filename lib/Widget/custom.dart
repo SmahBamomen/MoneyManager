@@ -22,14 +22,13 @@ class CustomCard extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(3))),
           child: Padding(
             padding: const EdgeInsets.only(
-              right: 5,
+              right: 5,left: 5
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(text1, style: TextStyle(color: CustomColors.colorYellow)),
-                SizedBox(
-                  width: 75,
-                ),
+
                 Text(text2,
                     style: TextStyle(
                         color: CustomColors.colorWhite,

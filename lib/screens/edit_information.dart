@@ -6,15 +6,16 @@ import 'package:money_manager/Widget/custom_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:money_manager/model/function.dart';
 
-class MyInformation extends StatefulWidget {
-  const MyInformation({Key? key, }) : super(key: key);
+class EditInformation extends StatefulWidget {
+  const EditInformation({Key? key, }) : super(key: key);
 
   @override
-  State<MyInformation> createState() => _MyInformationState();
+  State<EditInformation> createState() => _EditInformationState();
 }
 
-class _MyInformationState extends State<MyInformation> {
+class _EditInformationState extends State<EditInformation> {
   TextEditingController userNameController = new TextEditingController();
   TextEditingController monthlyBalanceController = new TextEditingController();
   TextEditingController savingBalanceController = new TextEditingController();
@@ -22,87 +23,113 @@ class _MyInformationState extends State<MyInformation> {
   TextEditingController bandBasicOutcomeController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return CustomBackground(
-      child:  AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          child: Stack(
+    return   StreamBuilder(
+      stream: FirebaseFirestore.instance.collection("users").doc(auth.currentUser?.uid).snapshots(),
+      builder: (context, snapshot) {
+
+        if (snapshot.hasError) {
+          return Text('OPS ! ');
+        }
+
+        else if (snapshot.hasData || snapshot.data != null)  {
+
+          return CustomBackground(
+            child:  AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle.light,
+              child: GestureDetector(
+                child: Stack(
 
 
-            children: [
-              Container(
+                  children: [
+                    Container(
 
 
-                margin: EdgeInsets.only(top: 150),
-                height: double.infinity,
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 20, left: 20,),
+                      margin: EdgeInsets.only(top: 150),
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 20, left: 20,),
 
 
-                  child: SingleChildScrollView(
-                    child: Column(
+                        child: SingleChildScrollView(
+                          child: Column(
 
-                      children: [
-                        SizedBox(height: 30),
-                        SvgPicture.asset("assets/icons/logo.svg",color: CustomColors.colorYellow,width:88 ,height: 48.22,),
-SizedBox(height: 20),
-                        Text("ادخل بياناتك المالية الأساسية للمرة الأولى",
-                          style: TextStyle(
-                            color:CustomColors.colorWhite,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400
-                          ),),
+                            children: [
+                              SizedBox(height: 30),
+                              SvgPicture.asset("assets/icons/logo.svg",color: CustomColors.colorYellow,width:88 ,height: 48.22,),
+                              SizedBox(height: 20),
+                              Text("لتعديل بياناتك المالية",
+                                style: TextStyle(
+                                    color:CustomColors.colorWhite,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400
+                                ),),
 
-                        buildName(),
-                        buildMonthly(),
-                        buildSaving(),
-                        Text(  "                          "),
+                              buildName(snapshot.data!["userName"]),
+                              buildMonthly(snapshot.data!["monthlyBalance"]),
 
-                        buildBasics(),
-                        TextButton.icon(
-                            label: Container(),
-                            style: TextButton.styleFrom(padding: EdgeInsets.all(20),
-                            ),
-                            icon: Icon(Icons.add_box_outlined, color:CustomColors.colorYellow,
-                              size: 26.0,
-                            ),
+                              buildSaving(snapshot.data!["savingBalance"]),
+                              Text(  "                          "),
 
-                            onPressed: () {}),
+                              buildBasics(),
+                              TextButton.icon(
+                                  label: Container(),
+                                  style: TextButton.styleFrom(padding: EdgeInsets.all(20),
+                                  ),
+                                  icon: Icon(Icons.add_box_outlined, color:CustomColors.colorYellow,
+                                    size: 26.0,
+                                  ),
 
-                        Text(  "                          "),
-                        Text(  "                          "),
-                        Text(  "                          "),
+                                  onPressed: () {}),
 
-
-TextButton(onPressed: () async {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
-  FirebaseFirestore.instance
-      .collection('users').doc(auth.currentUser?.uid)
-      .set({'uid':auth.currentUser?.uid,'userName':userNameController.text,'monthlyBalance': double.parse(monthlyBalanceController.text),'savingBalance':double.parse(savingBalanceController.text),'bacicsOutcome':double.parse(basicOutcomeController.text) });
+                              Text(  "                          "),
+                              Text(  "                          "),
+                              Text(  "                          "),
 
 
-  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CustomApp()));
-}, child: Text('حفظ',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 24,color: CustomColors.colorYellow ),)),
+                              TextButton(onPressed: () async {
+                                final FirebaseAuth auth = FirebaseAuth.instance;
 
-                      ],
+                                FirebaseFirestore.instance
+                                    .collection('users').doc(auth.currentUser?.uid)
+                                    .update({'uid':auth.currentUser?.uid,'userName':userNameController.text,'monthlyBalance': double.parse(monthlyBalanceController.text),'savingBalance':double.parse(savingBalanceController.text),'bacicsOutcome':double.parse(basicOutcomeController.text) });
+
+
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CustomApp()));
+                              }, child: Text('حفظ',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 24,color: CustomColors.colorYellow ),)),
+
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
+            ),
+          );
+        }
+
+
+        return const Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(
+              CustomColors.colorWhite,
+            ),
           ),
-        ),
-      ),
+        );
+
+      },
+
     );
+
 
   }
 
 
 
 
-  Widget buildName(){
+  Widget buildName(name){
     return Column(
 
 
@@ -117,18 +144,18 @@ TextButton(onPressed: () async {
 
         Container(
 
-        //  alignment: Alignment.bottomRight,
+          //  alignment: Alignment.bottomRight,
           height: 17,
           child: TextField(
             controller: userNameController,
             autocorrect: true,
-           // textAlign: TextAlign.right,
+            // textAlign: TextAlign.right,
             decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white60),
               ),
 
-              hintText: "تركي ..." ,
+              hintText: name ,
               hintStyle:TextStyle(fontSize: 13.0, color: CustomColors.colorGrey),
 
             ),
@@ -149,7 +176,7 @@ TextButton(onPressed: () async {
 
 
 
-  Widget buildMonthly(){
+  Widget buildMonthly(monthlyBalance){
     return Column(
 
 
@@ -161,17 +188,17 @@ TextButton(onPressed: () async {
 
         Container(
 
-         // alignment: Alignment.bottomLeft,
+          // alignment: Alignment.bottomLeft,
           height: 16,
           child: TextField(
             controller: monthlyBalanceController,
             autocorrect: true,
-           // textAlign: TextAlign.right,
+            // textAlign: TextAlign.right,
             decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white60),
               ),
-              hintText: "٠٠،٠٠" ,
+              hintText: monthlyBalance.toString() ,
               hintStyle:TextStyle(fontSize: 13.0, color:CustomColors.colorGrey),
 
               //suffixIcon: Icon(Icons.attach_money ,color:  CustomColors.colorYellow,size: 17, ),
@@ -189,7 +216,7 @@ TextButton(onPressed: () async {
       ],
     );
   }
-  Widget buildSaving(){
+  Widget buildSaving(savingBalance){
     return Column(
 
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +243,7 @@ TextButton(onPressed: () async {
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white60),
               ),
-              hintText: "٠٠،٠٠",
+              hintText: savingBalance.toString(),
               hintStyle:TextStyle(fontSize: 13.0, color: CustomColors.colorGrey),
 
 

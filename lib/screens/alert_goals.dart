@@ -1,8 +1,10 @@
+import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:money_manager/Widget/custom_colors.dart';
-
+import 'package:money_manager/model/function.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 class AlertGoals extends StatefulWidget {
   const AlertGoals({Key? key}) : super(key: key);
 
@@ -28,7 +30,7 @@ class _AlertGoalsState extends State<AlertGoals> {
                 side: BorderSide(color: CustomColors.colorWhite)),
             content: Container(
               width: 396,
-              height: 280,
+              height: 210,
               child: Column(
                 children: [
                   Text(
@@ -40,11 +42,11 @@ class _AlertGoalsState extends State<AlertGoals> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    monthCount,
+                    monthCount.isEmpty ? '٠ أشهر' : monthCount,
                     style: TextStyle(
                         fontSize: 24,
-                        fontWeight: FontWeight.w500,
-                        color: CustomColors.colorWhite),
+                        fontWeight: FontWeight.w400,
+                        color: CustomColors.colorYellow),
                   ),
                   SizedBox(height: 10),
                   Container(
@@ -192,36 +194,39 @@ class _AlertGoalsState extends State<AlertGoals> {
                             ))),
                   ),
                   const SizedBox(height: 15),
-                  // Divider(
-                  //
-                  //   thickness: 1,
-                  //   color: CustomColors.colorHintGrey,
-                  // ),
-                  Container(
-                    padding: EdgeInsets.only(left: 16, right: 16),
-                    width: 396,
-                    child: OutlinedButton(
-                        style: ButtonStyle(
-                            side: MaterialStateProperty.all(const BorderSide(
-                                color: CustomColors.colorHintGrey,
-                                width: 1.0,
-                                style: BorderStyle.solid))),
-                        onPressed: () {
-                          goalCalculator(
-                              8000,
-                              double.parse(moneyController.text),
-                              double.parse(percentController.text));
-                        },
-                        child: const Text(
-                          "أضف هدف",
-                          style: TextStyle(color: CustomColors.colorYellow),
-                        )),
-                  ),
-// OutlinedButton(onPressed: null, child: Text("Add Goal",style: TextStyle(color: CustomColors.colorYellow,fontWeight: FontWeight.w600,fontSize: 14))),
-                  // TextButton(onPressed: null, child: Text("Add Goal",style: TextStyle(color: CustomColors.colorYellow,fontWeight: FontWeight.w600,fontSize: 14))),
-                ],
+
+    ],
               ),
             ),
+            actionsPadding: EdgeInsets.all(0.0),
+            actions: [
+              Divider(
+
+                thickness: 1,
+                color: CustomColors.colorHintGrey,
+              ),
+           Center(
+             child: TextButton( onPressed: () {
+
+               FirebaseFirestore.instance
+                   .collection('users')
+                   .doc(auth.currentUser?.uid).collection('goals')
+                   .add(
+                   {'goalsName':purposeController.text ,
+                     'goalsBalance': double.parse(moneyController.text),
+                     'duration':monthCount,
+                     'rest':double.parse(moneyController.text),
+                     'durationRest':monthCount,
+                   'percent':'0.0'});
+Navigator.pop(context);
+
+          }, child: Text(
+  "أضف هدف",
+  style: TextStyle(color: CustomColors.colorYellow),
+)),
+           ),
+
+            ],
           );
         }));
     ;

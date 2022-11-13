@@ -7,8 +7,9 @@ import 'package:money_manager/Widget/custom_textfield.dart';
 import 'package:flutter/services.dart';
 import 'package:money_manager/model/function.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:money_manager/screens/alert_sccess.dart';
 import 'package:money_manager/screens/drop_down.dart.dart';
-
+import 'package:get/get.dart';
 var list = <String>[
   'اختر نوع العملية',
   'الراتب',
@@ -21,6 +22,7 @@ var list = <String>[
   'أجهزة',
   'مصروفات أخرى'
 ];
+
 class AddExpense extends StatefulWidget {
   const AddExpense({Key? key}) : super(key: key);
 
@@ -29,6 +31,20 @@ class AddExpense extends StatefulWidget {
 }
 
 class _AddExpenseState extends State<AddExpense> {
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    // for (int i =0 ; i<= 8 ; i++){
+    //   var test = FirebaseFirestore.instance
+    //       .collection('users').doc(auth.currentUser?.uid).collection("manager").doc();
+    //   print(test.id);
+    //   test.update({'id':test.id});
+    //
+    // }
+
+    super.initState();
+  }
   TextEditingController moneyController = new TextEditingController();
   String dropdownValue = list.first;
 
@@ -38,6 +54,7 @@ class _AddExpenseState extends State<AddExpense> {
   Widget build(BuildContext context) {
     return StatefulBuilder(builder: (BuildContext context, setState) {
       return AlertDialog(
+        
         backgroundColor: CustomColors.colorAlertGrey.withOpacity(0.5),
         scrollable: true,
         shape: RoundedRectangleBorder(
@@ -45,7 +62,8 @@ class _AddExpenseState extends State<AddExpense> {
             side: BorderSide(color: CustomColors.colorWhite)),
         content: Container(
           width: 396,
-          height: 243,
+          height: 140,
+
           child: Column(
             children: <Widget>[
               CustomTextFeild(
@@ -122,63 +140,84 @@ class _AddExpenseState extends State<AddExpense> {
                 hinttext: 'ادخل غرضاً(اختياري)',
                 keyboardType: TextInputType.number,
               ),
-              const SizedBox(
-                height: 6,
-              ),
-              Row(children: [
-                CustomButton(
-                  text: 'انفاق',
-                  width: MediaQuery.of(context).size.width / 3.25,
-                  // color: Colors.white,
-                  color: Colors.transparent,
-                  textColor: CustomColors.colorYellow,
-                  action: () {
-                    setState(() {
-                      if(dropdownValue == list[0]){
 
-                      }
-                      else{
-                        incomeAndOutcomeFunction(
-                            double.parse(moneyController.value.text),
-                            dropdownValue,
-                            purposeController.text,
-                            false);
-
-                        Navigator.pop(context);
-                      }
-
-                    });
-                  },
-                ),
-                CustomButton(
-                  width: MediaQuery.of(context).size.width / 3.25,
-                  text: 'إضافة دخل',
-                  // color: Colors.white,
-                  color: Colors.transparent,
-                  textColor: CustomColors.colorYellow,
-                  action: () {
-                    setState(() {
-
-
-                      if(dropdownValue == list[0]){
-
-                      }
-                      else{
-                        incomeAndOutcomeFunction(
-                            double.parse(moneyController.value.text),
-                            dropdownValue,
-                            purposeController.text,
-                            true);
-                        Navigator.pop(context);
-                      }
-
-                    });
-                  },
-                ),
-              ])
             ],
           ),
         ),
+       actionsAlignment: MainAxisAlignment.spaceBetween,
+        actionsPadding: EdgeInsets.all(0),
+        actions: [
+    
+       Row(
+         children: [
+           CustomButton(
+             width:155.0,
+             text: 'إضافة دخل',
+             // color: Colors.white,
+             color: Colors.transparent,
+             textColor: CustomColors.colorYellow,
+             action: () {
+               setState(() {
+
+
+                 if(dropdownValue == list[0]){
+
+                 }
+                 else{
+                   incomeAndOutcomeFunction(
+                       double.parse(moneyController.value.text),
+                       dropdownValue,
+                       purposeController.text,
+                       true);
+                   Navigator.pop(context);
+                   showDialog(
+                       context: context,
+
+                       builder: (BuildContext context) {
+                         return AlertSccess();
+                       });
+
+                 //  Navigator.pop(context);
+                 }
+
+               });
+             },
+           ),
+           CustomButton(
+           text: 'انفاق',
+          width: 155.0,
+           // color: Colors.white,
+           color: Colors.transparent,
+           textColor: CustomColors.colorYellow,
+           action: () {
+             setState(() {
+               if(dropdownValue == list[0]){
+
+               }
+               else{
+                 incomeAndOutcomeFunction(
+                     double.parse(moneyController.value.text),
+                     dropdownValue,
+                     purposeController.text,
+                     false);
+
+                 Navigator.pop(context);
+                 showDialog(
+                     context: context,
+
+                     builder: (BuildContext context) {
+                       return AlertSccess();
+                     });
+               }
+
+             });
+           },
+         ),
+
+
+         ],
+       )
+        ],
       );
     });
   }

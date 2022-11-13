@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:money_manager/Widget/custom_colors.dart';
-
+import 'package:flutter_svg/svg.dart';
 class AlertSccess extends StatefulWidget {
   const AlertSccess({Key? key}) : super(key: key);
 
@@ -25,15 +25,16 @@ class _AlertSccessState extends State<AlertSccess> {
                     side: BorderSide(color: CustomColors.colorWhite)),
                 content: Container(
                   width: 396,
-                  height: 280,
+                  height: 200,
                   child: Center(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("                                 "),
-                        Text("                                 "),
 
-                        Icon(Icons.check_circle_outline_sharp, color: CustomColors.colorYellow,size: 100, ),
-                        Text("تمت الإضافة بنجاح",style: TextStyle(fontSize: 30,color: CustomColors.colorYellow),),
+                        SvgPicture.asset("assets/icons/sucess.svg"),
+                        SizedBox(height: 20.5),
+                        Text("تمت الإضافة بنجاح",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 24,color: CustomColors.colorYellow),),
                       ]
                       ,
                     ),

@@ -69,7 +69,7 @@ class _CustomButtonState extends State<CustomButton> {
           maxLines: 1,
           style: TextStyle(
               color: widget.textColor ?? Colors.white,
-              fontWeight: FontWeight.bold),
+              fontWeight: FontWeight.w500),
         ),
       ),
     );

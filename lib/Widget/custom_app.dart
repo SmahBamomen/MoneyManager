@@ -7,6 +7,7 @@ import 'package:money_manager/Widget/custom_background.dart';
 import 'package:money_manager/Widget/custom_colors.dart';
 import 'package:money_manager/screens/add_expense.dart';
 import 'package:money_manager/screens/chart.dart';
+import 'package:money_manager/screens/edit_information.dart';
 import 'package:money_manager/screens/goals.dart';
 import 'package:money_manager/screens/home.dart';
 import 'package:money_manager/screens/my_information.dart';
@@ -30,7 +31,7 @@ class _CustomAppState extends State<CustomApp> {
     Reports(),
     Home(),
     Goals(),
-    MyInformation(),
+    EditInformation(),
   ];
   @override
   Widget build(BuildContext context) {

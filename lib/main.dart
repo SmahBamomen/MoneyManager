@@ -47,6 +47,7 @@ class _MoneyManagerMainState extends State<MoneyManagerMain> {
   TextEditingController salaryController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
+
     return GetMaterialApp(
       textDirection: TextDirection.rtl,
       title: 'MoneyManagerMain',
