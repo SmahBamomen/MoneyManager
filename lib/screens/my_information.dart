@@ -77,10 +77,13 @@ SizedBox(height: 20),
 
 TextButton(onPressed: () async {
   final FirebaseAuth auth = FirebaseAuth.instance;
-
+double newSalary = double.parse(monthlyBalanceController.text) - double.parse(savingBalanceController.text) -double.parse(basicOutcomeController.text) ;
   FirebaseFirestore.instance
       .collection('users').doc(auth.currentUser?.uid)
-      .set({'uid':auth.currentUser?.uid,'userName':userNameController.text,'monthlyBalance': double.parse(monthlyBalanceController.text),'savingBalance':double.parse(savingBalanceController.text),'bacicsOutcome':double.parse(basicOutcomeController.text) });
+      .set({'uid':auth.currentUser?.uid,'userName':userNameController.text,
+    'monthlyBalance': newSalary,
+    'savingBalance':double.parse(savingBalanceController.text),
+    'bacicsOutcome':double.parse(basicOutcomeController.text) });
 
 
   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CustomApp()));
@@ -179,8 +182,7 @@ TextButton(onPressed: () async {
             ),
 
             keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))],
-
+            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'1$|^[1-9]\d*$|^\.\d+$|^0\.\d*$|^[1-9]\d*\.\d*$\d{0,2}'))],
             style: TextStyle(fontSize:14 ,color: Colors.white ),
 
           ),
@@ -207,10 +209,10 @@ TextButton(onPressed: () async {
             controller: savingBalanceController,
             autocorrect: true,
             textAlign: TextAlign.right,
-            keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))],
-
-
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+            ],
             decoration: InputDecoration(
 
               enabledBorder: UnderlineInputBorder(
@@ -250,10 +252,10 @@ TextButton(onPressed: () async {
               subtitle:  TextFormField(
                 controller: basicOutcomeController,
                 autocorrect: true,
-
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))],
-
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                ],
                 decoration: const InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.white60),

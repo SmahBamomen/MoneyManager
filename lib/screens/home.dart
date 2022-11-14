@@ -112,127 +112,138 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-SizedBox(height: 10),
+               SizedBox(height: 10),
                 Expanded(
-                  child: StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection("users").doc(auth.currentUser?.uid).collection("manager").snapshots(),
+                  child: Container(
+                    height: double.infinity,
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance.collection("users").doc(auth.currentUser?.uid).collection("manager").snapshots(),
 
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('OPS ! ');
-                      } else if (snapshot.hasData || snapshot.data != null) {
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('OPS ! ');
+                        } else if (snapshot.hasData || snapshot.data != null) {
 
-                        return   Column(
-                          children: [
-                            // Container(
-                            //   height: 300,
-                            //   child: ListView.builder(
-                            //       scrollDirection: Axis.horizontal,
-                            //       itemCount:    snapshot.data!.docs.length,
-                            //      // padding:  EdgeInsets.only(left:40.0),
-                            //       itemBuilder: (BuildContext context, int index) {
-                            //         return    Container(
-                            //
-                            //
-                            //           // height: categoriesList[index+1].contains(snapshot.data!.docs[index].data()["categories"])?
-                            //           //  0:snapshot.data!.docs[index].data()["money"]/10,
-                            //           height: 10,
-                            //           width: 2,
-                            //
-                            //           decoration: BoxDecoration(
-                            //               color: CustomColors.colorYellow,
-                            //               borderRadius:  BorderRadius.only(topLeft: Radius.circular(4.0),topRight: Radius.circular(4.0))
-                            //           ),
-                            //         );
-                            //       }),
-                            // ),
-                            // Container(
-                            //   height: 300,
-                            //   child: ListView.builder(
-                            //       scrollDirection: Axis.horizontal,
-                            //       itemCount:    categoriesList.length,
-                            //       // padding:  EdgeInsets.only(left:40.0),
-                            //       itemBuilder: (BuildContext context, int index) {
-                            //         return  Container(
-                            //           height: 90,
-                            //           child:   RotatedBox(
-                            //             quarterTurns: 3,
-                            //             child:     Text(categoriesList[index].toString(),style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: CustomColors.colorWhite),),
-                            //
-                            //           ),
-                            //         );
-                            //       }),
-                            // ),
-                            Container(
-                                width: MediaQuery.of(context).size.width * 1,
-                                height: MediaQuery.of(context).size.height * 0.035 ,
-                                decoration:BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide( //                   <--- left side
-                                      color: CustomColors.colorGrey,
-                                      width: 1.0,
-                                    ),
+                          return   Column(
 
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("آخر العمليات",style: TextStyle(fontWeight: FontWeight.w500,fontSize:12 ,color: CustomColors.colorWhite,),),
-                                    TextButton(onPressed: (){
+                            children: [
+                              Container(
+                                height: 150,
+                                child: ListView.builder(
 
-                                      Get.to(AllLastTransactions(items: snapshot.data!.docs,userName: userName,));
-                                    }, child:   Text(" مشاهدة الكل",style: TextStyle(fontWeight: FontWeight.w500,fontSize:12 ,color: CustomColors.colorYellow,)
-                                      ,),
-                                    )
-                                  ],
-                                )),
-                            Container(
-                              height: 150,
-                              child: ListView.builder(
-                                  itemCount: snapshot.data!.docs.length,
-                                  padding:  EdgeInsets.all(0.0),
-                                  itemBuilder: (BuildContext context, int index) {
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount:    snapshot.data!.docs.length,
+                                   padding:  EdgeInsets.only(left:20.0,right: 20),
+                                    itemBuilder: (BuildContext context, int index) {
+                                      print(categoriesList[index].toString() );
+                                      print(snapshot.data!.docs[index].data()["categories"]);
+                                      return  categoriesList.contains(snapshot.data!.docs[index].data()["categories"]) ? Container(
 
-                                    return  Container(
 
-                                        margin:const EdgeInsets.only(top: 10,left: 10),
-                                        color:CustomColors.colorLightGrey ,
-
-                                        child: ListTile(
-
-                                            minLeadingWidth: 0,
-
-                                            title: Row(
-
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(snapshot.data!.docs[index].data()["purpose"],style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: CustomColors.colorWhite),),
-                                                Text(DateFormat('MM/dd/yyyy').format(snapshot.data!.docs[index].data()["date"].toDate()),style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: CustomColors.colorLowLightGrey),),
-                                              ],
-                                            )
-                                            //   ,leading: Icon(Icons.monetization_on_outlined,color: CustomColors.colorYellow,),
-                                            ,leading:SvgPicture.asset(
-                                          tileIcon(snapshot.data!.docs[index].data()["categories"] ?? others),
-                                          height: snapshot.data!.docs[index].data()["categories"].toString() != "مصروفات أخرى" ? 20.0: 8.0,
+                                        // height: categoriesList[index+1].contains(snapshot.data!.docs[index].data()["categories"])?
+                                        //  0:snapshot.data!.docs[index].data()["money"]/10,
+                                        height: 10,
+                                        width: 10,
+                                        decoration: BoxDecoration(
+                                            color: CustomColors.colorYellow,
+                                            borderRadius:  BorderRadius.only(topLeft: Radius.circular(4.0),topRight: Radius.circular(4.0))
                                         ),
+                                      ):Container();
+                                    }),
+                              ),
 
-                                            trailing: snapshot.data!.docs[index].data()["outcome"] == true ? Icon(Icons.arrow_downward_sharp,color: Colors.red,):Icon(Icons.arrow_upward,color: Colors.green,)));
-                                  }),
-                            )
-                          ],
-                        );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            CustomColors.colorWhite,
+                              Container(
+                                padding: EdgeInsets.only(top: 30),
+                                height: 300,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount:    categoriesList.length,
+
+                                    itemBuilder: (BuildContext context, int index) {
+                                      return  Padding(
+                                        padding: const EdgeInsets.only(left:20.0,right:20.0),
+                                        child: Container(
+                                          height: 90,
+                                          child:   RotatedBox(
+                                            quarterTurns: 3,
+                                            child:   Text(categoriesList[index].toString(),style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: CustomColors.colorWhite),),
+
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                              ),
+                              Container(
+                                height: 50,
+                                child: ListView.builder(
+                                    itemCount: snapshot.data!.docs.length,
+                                    padding:  EdgeInsets.all(0.0),
+                                    itemBuilder: (BuildContext context, int index) {
+
+                                      return  Container(
+
+                                          margin:const EdgeInsets.only(top: 10,left: 10),
+                                          color:CustomColors.colorLightGrey ,
+
+                                          child: ListTile(
+
+                                              minLeadingWidth: 0,
+
+                                              title: Row(
+
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(snapshot.data!.docs[index].data()["purpose"],style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: CustomColors.colorWhite),),
+                                                  Text(DateFormat('MM/dd/yyyy').format(snapshot.data!.docs[index].data()["date"].toDate()),style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: CustomColors.colorLowLightGrey),),
+                                                ],
+                                              )
+                                              //   ,leading: Icon(Icons.monetization_on_outlined,color: CustomColors.colorYellow,),
+                                              ,leading:SvgPicture.asset(
+                                            tileIcon(snapshot.data!.docs[index].data()["categories"] ?? others),
+                                            height: snapshot.data!.docs[index].data()["categories"].toString() != "مصروفات أخرى" ? 20.0: 8.0,
+                                          ),
+
+                                              trailing: snapshot.data!.docs[index].data()["outcome"] == true ? Icon(Icons.arrow_downward_sharp,color: Colors.red,):Icon(Icons.arrow_upward,color: Colors.green,)));
+                                    }),
+                              ),
+                              Container(
+                                  width: MediaQuery.of(context).size.width * 1,
+                                  height: MediaQuery.of(context).size.height * 0.035 ,
+                                  decoration:BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide( //                   <--- left side
+                                        color: CustomColors.colorGrey,
+                                        width: 1.0,
+                                      ),
+
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("آخر العمليات",style: TextStyle(fontWeight: FontWeight.w500,fontSize:12 ,color: CustomColors.colorWhite,),),
+                                      TextButton(onPressed: (){
+
+                                        Get.to(AllLastTransactions(items: snapshot.data!.docs,userName: userName,));
+                                      }, child:   Text(" مشاهدة الكل",style: TextStyle(fontWeight: FontWeight.w500,fontSize:12 ,color: CustomColors.colorYellow,)
+                                        ,),
+                                      )
+                                    ],
+                                  ))
+                            ],
+                          );
+                        }
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              CustomColors.colorWhite,
+                            ),
                           ),
-                        ),
-                      );
+                        );
 
-                    },
+                      },
 
+                    ),
                   ),
                 ),
 

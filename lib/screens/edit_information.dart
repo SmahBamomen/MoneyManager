@@ -206,8 +206,7 @@ class _EditInformationState extends State<EditInformation> {
             ),
 
             keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))],
-
+            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'1$|^[1-9]\d*$|^\.\d+$|^0\.\d*$|^[1-9]\d*\.\d*$\d{0,2}'))],
             style: TextStyle(fontSize:14 ,color: Colors.white ),
 
           ),
@@ -234,9 +233,10 @@ class _EditInformationState extends State<EditInformation> {
             controller: savingBalanceController,
             autocorrect: true,
             textAlign: TextAlign.right,
-            keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))],
-
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+            ],
 
             decoration: InputDecoration(
 
@@ -277,10 +277,10 @@ class _EditInformationState extends State<EditInformation> {
               subtitle:  TextFormField(
                 controller: basicOutcomeController,
                 autocorrect: true,
-
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))],
-
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                ],
                 decoration: const InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.white60),
